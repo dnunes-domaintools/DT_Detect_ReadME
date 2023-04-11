@@ -1,5 +1,6 @@
 DomainTools is an essential component in the security stack of mature enterprises and performance-driven security teams.
-This integration was integrated and tested with version xx of DomainToolsIrisDetect
+Iris Detect helps organizations discover and monitor lookalike domains with unmatched speed and coverage.
+
 
 ## Configure DomainTools Iris Detect on Cortex XSOAR
 
@@ -40,8 +41,7 @@ After you successfully execute a command, a DBot message appears in the War Room
 ### domaintools-iris-detect-escalate-domains
 
 ***
-Escalate a given domain to Google Phishing Protection, leveraging the protections Google puts into Chrome to protect
-billions of users. Mozilla Firefox and Apple's Safari browsers are also known to pick up these blocking rules.
+Reports a domain to Google's Safe Browsing API. After approval, their block list is picked up by Chrome and most modern browsers.
 
 #### Base Command
 
@@ -67,12 +67,12 @@ There is no context output for this command.
 {
   "DomainToolsIrisDetect": {
     "Indicators": {
-      "dt_created_by": "nvojjala@loginsoft.com",
+      "dt_created_by": "user@example.com",
       "dt_created_date_result": "2023-04-11T05:20:49.104498+00:00",
       "dt_escalation_type": "google_safe",
       "dt_id": "5ebALaKgQW",
       "dt_updated_date": "2023-04-11T05:20:49.104498+00:00",
-      "dt_watchlist_domain_id": "jaMzYv2plE"
+      "dt_watchlist_domain_id": "jaMzYv2flE"
     }
   }
 }
@@ -83,7 +83,7 @@ There is no context output for this command.
 > ### Escalated Domains
 >|dt_created_by|dt_created_date_result|dt_escalation_type|dt_id|dt_updated_date|dt_watchlist_domain_id|
 >|---|---|---|---|---|---|
->| nvojjala@loginsoft.com | 2023-04-11T05:20:49.104498+00:00 | google_safe | 5ebALaKgQW | 2023-04-11T05:20:49.104498+00:00 | jaMzYv2plE |
+>| user@example | 2023-04-11T05:20:49.104498+00:00 | google_safe | 5ebALaKhQW | 2023-04-11T05:20:49.104498+00:00 | jaMzYv2glE |
 
 ### domaintools-iris-detect-blocklist-domains
 
@@ -115,7 +115,7 @@ There is no context output for this command.
 {
   "DomainToolsIrisDetect": {
     "Indicators": {
-      "dt_created_by": "nvojjala@loginsoft.com",
+      "dt_created_by": "user@example.com",
       "dt_created_date_result": "2023-04-11T05:20:43.339439+00:00",
       "dt_escalation_type": "blocked",
       "dt_id": "47E4ZwAboq",
@@ -131,7 +131,7 @@ There is no context output for this command.
 > ### Blocked Domains
 >|dt_created_by|dt_created_date_result|dt_escalation_type|dt_id|dt_updated_date|dt_watchlist_domain_id|
 >|---|---|---|---|---|---|
->| nvojjala@loginsoft.com | 2023-04-11T05:20:43.339439+00:00 | blocked | 47E4ZwAboq | 2023-04-11T05:20:43.339439+00:00 | vEwp2mQxYP |
+>| user@example.com | 2023-04-11T05:20:43.339439+00:00 | blocked | 47E4ZwAboq | 2023-04-11T05:20:43.339439+00:00 | vEwp2mQxYP |
 
 ### domaintools-iris-detect-watch-domains
 
@@ -166,7 +166,7 @@ There is no context output for this command.
     "Indicators": {
       "dt_changed_date": "2023-04-09T09:50:36.000000+00:00",
       "dt_discovered_date": "2023-04-09T09:49:49.447000+00:00",
-      "dt_domain": "amazonpayinsurance.ie",
+      "dt_domain": "fakepayinsurance.ie",
       "dt_domain_id": "OWxlNO23VW",
       "dt_state": "watched"
     }
@@ -179,7 +179,7 @@ There is no context output for this command.
 > ### Watched Domains
 >|dt_changed_date|dt_discovered_date|dt_domain|dt_domain_id|dt_state|
 >|---|---|---|---|---|
->| 2023-04-09T09:50:36.000000+00:00 | 2023-04-09T09:49:49.447000+00:00 | amazonpayinsurance.ie | OWxlNO23VW | watched |
+>| 2023-04-09T09:50:36.000000+00:00 | 2023-04-09T09:49:49.447000+00:00 | fakepayinsurance.ie | OWxlNO23VW | watched |
 
 ### domaintools-iris-detect-ignore-domains
 
@@ -212,7 +212,7 @@ There is no context output for this command.
     "Indicators": {
       "dt_changed_date": "2023-04-09T09:50:36.000000+00:00",
       "dt_discovered_date": "2023-04-09T09:49:49.447000+00:00",
-      "dt_domain": "amazonpayinsurance.ie",
+      "dt_domain": "fakepayinsurance.ie",
       "dt_domain_id": "OWxlNO23VW",
       "dt_state": "ignored"
     }
@@ -225,7 +225,7 @@ There is no context output for this command.
 > ### Ignored Domains
 >|dt_changed_date|dt_discovered_date|dt_domain|dt_domain_id|dt_state|
 >|---|---|---|---|---|
->| 2023-04-09T09:50:36.000000+00:00 | 2023-04-09T09:49:49.447000+00:00 | amazonpayinsurance.ie | OWxlNO23VW | ignored |
+>| 2023-04-09T09:50:36.000000+00:00 | 2023-04-09T09:49:49.447000+00:00 | fakepayinsurance.ie | OWxlNO23VW | ignored |
 
 ### domaintools-iris-detect-get-monitors-list
 
@@ -273,38 +273,38 @@ UI (https://iris.domaintools.com/detect/)
   "DomainToolsIrisDetect": {
     "Monitor": [
       {
-        "created_by": "nvojjala@loginsoft.com",
+        "created_by": "user@example.com",
         "created_date": "2022-09-20T06:01:56.760955+00:00",
         "id": "QEMba8wmxo",
         "match_substring_variations": false,
         "nameserver_exclusions": [],
         "state": "active",
         "status": "completed",
-        "term": "aliexpress",
+        "term": "domainexpress",
         "text_exclusions": [],
         "updated_date": "2022-09-20T06:02:33.358799+00:00"
       },
       {
-        "created_by": "nvojjala@loginsoft.com",
+        "created_by": "user@example.com",
         "created_date": "2022-09-16T22:29:20.567614+00:00",
         "id": "rA7bn46jQ3",
         "match_substring_variations": false,
         "nameserver_exclusions": [],
         "state": "active",
         "status": "completed",
-        "term": "amazon",
+        "term": "fakedomain",
         "text_exclusions": [],
         "updated_date": "2022-09-16T22:30:16.212269+00:00"
       },
       {
-        "created_by": "nvojjala@loginsoft.com",
+        "created_by": "user@example.com",
         "created_date": "2022-09-20T05:35:21.203482+00:00",
         "id": "YNrbr6Gbkx",
         "match_substring_variations": false,
         "nameserver_exclusions": [],
         "state": "active",
         "status": "completed",
-        "term": "loginsoft",
+        "term": "searchterm",
         "text_exclusions": [],
         "updated_date": "2022-09-20T05:35:28.630194+00:00"
       }
@@ -318,9 +318,10 @@ UI (https://iris.domaintools.com/detect/)
 > ### Monitor List
 >|dt_created_by|dt_created_date|dt_match_substring_variations|dt_monitor_id|dt_nameserver_exclusions|dt_state|dt_status|dt_term|dt_text_exclusions|dt_updated_date|
 >|---|---|---|---|---|---|---|---|---|---|
->| nvojjala@loginsoft.com | 2022-09-20T06:01:56.760955+00:00 | false | QEMba8wmxo |  | active | completed | aliexpress |  | 2022-09-20T06:02:33.358799+00:00 |
->| nvojjala@loginsoft.com | 2022-09-16T22:29:20.567614+00:00 | false | rA7bn46jQ3 |  | active | completed | amazon |  | 2022-09-16T22:30:16.212269+00:00 |
->| nvojjala@loginsoft.com | 2022-09-20T05:35:21.203482+00:00 | false | YNrbr6Gbkx |  | active | completed | loginsoft |  | 2022-09-20T05:35:28.630194+00:00 |
+>| user@example.com | 2022-09-20T06:01:56.760955+00:00 | false | QEMba8wmxo |  | active | completed | domainexpress |  | 2022-09-20T06:02:33.358799+00:00 |
+>| user@example.com | 2022-09-16T22:29:20.567614+00:00 | false | rA7bn46jQ3 |  | active | completed | fakedomain |  | 2022-09-16T22:30:16.212269+00:00 |
+>| user@example.com | 2022-09-20T05:35:21.203482+00:00 | false | YNrbr6Gbkx |  | active | completed | searchterm
+> |  | 2022-09-20T05:35:28.630194+00:00 |
 
 ### domaintools-iris-detect-get-new-domains
 
@@ -397,7 +398,7 @@ to 50 if including DNS and whois details, or 500 otherwise. Use the offset param
       {
         "changed_date": "2023-04-11T05:16:56.483000+00:00",
         "discovered_date": "2023-04-11T05:16:56.483000+00:00",
-        "domain": "amazontask.shop",
+        "domain": "fakedomaintask.shop",
         "escalations": [],
         "id": "KW3ykVGZrE",
         "monitor_ids": [
@@ -413,7 +414,7 @@ to 50 if including DNS and whois details, or 500 otherwise. Use the offset param
       {
         "changed_date": "2023-04-11T05:15:42.000000+00:00",
         "discovered_date": "2023-04-11T05:12:22.081000+00:00",
-        "domain": "rambojombojo998amazon.com",
+        "domain": "rambojombojo998fakedomain.com",
         "escalations": [],
         "id": "gWlYVZxmja",
         "monitor_ids": [
@@ -442,8 +443,8 @@ to 50 if including DNS and whois details, or 500 otherwise. Use the offset param
 > ### New Domains
 >|dt_changed_date|dt_create_date|dt_discovered_date|dt_domain|dt_domain_id|dt_escalations|dt_monitor_ids|dt_mx_exists|dt_proximity_score|dt_registrant_contact_email|dt_registrar|dt_risk_score|dt_risk_status|dt_state|dt_status|dt_threat_profile_evidence|dt_threat_profile_malware|dt_threat_profile_phishing|dt_threat_profile_spam|dt_tld|
 >|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
->| 2023-04-11T05:16:56.483000+00:00 |  | 2023-04-11T05:16:56.483000+00:00 | amazontask.shop | KW3ykVGZrE |  | rA7bn46jQ3 | false |  |  |  |  |  | new | active |  |  |  |  | shop |
->| 2023-04-11T05:15:42.000000+00:00 |  | 2023-04-11T05:12:22.081000+00:00 | rambojombojo998amazon.com | gWlYVZxmja |  | rA7bn46jQ3 | false | 4 |  |  | 79 | provisional | new | active |  |  | 79 |  | com |
+>| 2023-04-11T05:16:56.483000+00:00 |  | 2023-04-11T05:16:56.483000+00:00 | fakedomaintask.shop | KW3ykVGZrE |  | rA7bn46jQ3 | false |  |  |  |  |  | new | active |  |  |  |  | shop |
+>| 2023-04-11T05:15:42.000000+00:00 |  | 2023-04-11T05:12:22.081000+00:00 | rambojombojo998fakedomain.com | gWlYVZxmja |  | rA7bn46jQ3 | false | 4 |  |  | 79 | provisional | new | active |  |  | 79 |  | com |
 
 ### domaintools-iris-detect-get-watched-domains
 
@@ -521,15 +522,15 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
   "DomainToolsIrisDetect": {
     "Watched": [
       {
-        "assigned_by": "nvojjala@loginsoft.com",
+        "assigned_by": "user@example.com",
         "assigned_date": "2023-04-11T04:46:39.000000+00:00",
         "changed_date": "2023-04-10T07:52:11.000000+00:00",
         "discovered_date": "2023-04-10T07:45:31.478000+00:00",
-        "domain": "amazonmetaworld.net.tr",
+        "domain": "fakedomainmetaworld.net.tr",
         "escalations": [
           {
             "created": "2023-04-11T04:46:39.181378+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "google_safe",
             "id": "43gB2Pwg6m"
           }
@@ -561,7 +562,7 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
         "escalations": [
           {
             "created": "2023-04-10T14:33:11.342255+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "blocked",
             "id": "nzgWDr3b9Y"
           }
@@ -596,8 +597,8 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 > ### Watched Domains
 >|dt_changed_date|dt_create_date|dt_discovered_date|dt_domain|dt_domain_id|dt_escalations|dt_monitor_ids|dt_mx_exists|dt_proximity_score|dt_registrant_contact_email|dt_registrar|dt_risk_score|dt_risk_status|dt_state|dt_status|dt_threat_profile_evidence|dt_threat_profile_malware|dt_threat_profile_phishing|dt_threat_profile_spam|dt_tld|
 >|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
->| 2023-04-10T07:52:11.000000+00:00 |  | 2023-04-10T07:45:31.478000+00:00 | amazonmetaworld.net.tr | 8Wq8Qj9X7P | {'escalation_type': 'google_safe', 'id': '43gB2Pwg6m', 'created': '2023-04-11T04:46:39.181378+00:00', 'created_by': 'nvojjala@loginsoft.com'} | rA7bn46jQ3 | false | 5 |  |  | 8 | full | watched | active |  | 1 | 6 | 8 | net.tr |
->| 2023-04-10T05:58:01.000000+00:00 |  | 2023-04-10T04:52:28.545000+00:00 | alixpress.co | gaeMyYl1Va | {'escalation_type': 'blocked', 'id': 'nzgWDr3b9Y', 'created': '2023-04-10T14:33:11.342255+00:00', 'created_by': 'nvojjala@loginsoft.com'} | QEMba8wmxo | true | 21 |  |  | 21 | full | watched | active |  | 20 | 15 | 17 | co |
+>| 2023-04-10T07:52:11.000000+00:00 |  | 2023-04-10T07:45:31.478000+00:00 | fakedomainmetaworld.net.tr | 8Wq8Qj9X7P | {'escalation_type': 'google_safe', 'id': '43gB2Pwg6m', 'created': '2023-04-11T04:46:39.181378+00:00', 'created_by': 'user@example.com'} | rA7bn46jQ3 | false | 5 |  |  | 8 | full | watched | active |  | 1 | 6 | 8 | net.tr |
+>| 2023-04-10T05:58:01.000000+00:00 |  | 2023-04-10T04:52:28.545000+00:00 | alixpress.co | gaeMyYl1Va | {'escalation_type': 'blocked', 'id': 'nzgWDr3b9Y', 'created': '2023-04-10T14:33:11.342255+00:00', 'created_by': 'user@example.com'} | QEMba8wmxo | true | 21 |  |  | 21 | full | watched | active |  | 20 | 15 | 17 | co |
 
 ### domaintools-iris-detect-get-ignored-domains
 
@@ -674,21 +675,21 @@ is limited to 50 if including DNS and whois details, or 500 otherwise. Use the o
   "DomainToolsIrisDetect": {
     "Ignored": [
       {
-        "assigned_by": "nvojjala@loginsoft.com",
+        "assigned_by": "user@example.com",
         "assigned_date": "2023-03-27T04:45:19.000000+00:00",
         "changed_date": "2023-03-30T09:07:59.000000+00:00",
         "discovered_date": "2023-03-21T13:57:47.094000+00:00",
-        "domain": "amazonn.shop",
+        "domain": "fakedomainn.shop",
         "escalations": [
           {
             "created": "2023-03-21T17:33:51.787271+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "blocked",
             "id": "VrxaQQ2xnK"
           },
           {
             "created": "2023-03-21T17:35:10.150279+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "google_safe",
             "id": "kzbwQQ2Ey2"
           }
@@ -720,7 +721,7 @@ is limited to 50 if including DNS and whois details, or 500 otherwise. Use the o
       {
         "changed_date": "2023-03-25T08:04:15.000000+00:00",
         "discovered_date": "2023-02-08T10:32:18.665000+00:00",
-        "domain": "awswalletamazon.com",
+        "domain": "walletfakedomain.com",
         "escalations": [],
         "id": "ya6dKwrRZP",
         "monitor_ids": [
@@ -756,8 +757,8 @@ is limited to 50 if including DNS and whois details, or 500 otherwise. Use the o
 > ### Ignored Domains
 >|dt_changed_date|dt_create_date|dt_discovered_date|dt_domain|dt_domain_id|dt_escalations|dt_monitor_ids|dt_mx_exists|dt_proximity_score|dt_registrant_contact_email|dt_registrar|dt_risk_score|dt_risk_status|dt_state|dt_status|dt_threat_profile_evidence|dt_threat_profile_malware|dt_threat_profile_phishing|dt_threat_profile_spam|dt_tld|
 >|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
->| 2023-03-30T09:07:59.000000+00:00 |  | 2023-03-21T13:57:47.094000+00:00 | amazonn.shop | VE87zKvOXa | {'escalation_type': 'blocked', 'id': 'VrxaQQ2xnK', 'created': '2023-03-21T17:33:51.787271+00:00', 'created_by': 'nvojjala@loginsoft.com'},<br/>{'escalation_type': 'google_safe', 'id': 'kzbwQQ2Ey2', 'created': '2023-03-21T17:35:10.150279+00:00', 'created_by': 'nvojjala@loginsoft.com'} | rA7bn46jQ3 | true | 100 |  |  | 100 | full | ignored | active | registrant,<br/>domain name,<br/>name server | 98 | 99 | 82 | shop |
->| 2023-03-25T08:04:15.000000+00:00 |  | 2023-02-08T10:32:18.665000+00:00 | awswalletamazon.com | ya6dKwrRZP |  | rA7bn46jQ3 | true | 100 |  |  | 100 | full | ignored | active | domain name,<br/>registrar,<br/>name server | 19 | 95 | 43 | com |
+>| 2023-03-30T09:07:59.000000+00:00 |  | 2023-03-21T13:57:47.094000+00:00 | fakedomainn.shop | VE87zKvOXa | {'escalation_type': 'blocked', 'id': 'VrxaQQ2xnK', 'created': '2023-03-21T17:33:51.787271+00:00', 'created_by': 'user@example.com'},<br/>{'escalation_type': 'google_safe', 'id': 'kzbwQQ2Ey2', 'created': '2023-03-21T17:35:10.150279+00:00', 'created_by': 'user@example.com'} | rA7bn46jQ3 | true | 100 |  |  | 100 | full | ignored | active | registrant,<br/>domain name,<br/>name server | 98 | 99 | 82 | shop |
+>| 2023-03-25T08:04:15.000000+00:00 |  | 2023-02-08T10:32:18.665000+00:00 | walletfakedomain.com | ya6dKwrRZP |  | rA7bn46jQ3 | true | 100 |  |  | 100 | full | ignored | active | domain name,<br/>registrar,<br/>name server | 19 | 95 | 43 | com |
 
 ### domaintools-iris-detect-get-escalated-domains
 
@@ -834,15 +835,15 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
   "DomainToolsIrisDetect": {
     "Escalated": [
       {
-        "assigned_by": "nvojjala@loginsoft.com",
+        "assigned_by": "user@example.com",
         "assigned_date": "2023-04-11T04:46:39.000000+00:00",
         "changed_date": "2023-04-10T07:52:11.000000+00:00",
         "discovered_date": "2023-04-10T07:45:31.478000+00:00",
-        "domain": "amazonmetaworld.net.tr",
+        "domain": "fakedomainmetaworld.net.tr",
         "escalations": [
           {
             "created": "2023-04-11T04:46:39.181378+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "google_safe",
             "id": "43gB2Pwg6m"
           }
@@ -868,15 +869,15 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
         "tld": "net.tr"
       },
       {
-        "assigned_by": "nvojjala@loginsoft.com",
+        "assigned_by": "user@example.com",
         "assigned_date": "2023-04-11T05:18:05.000000+00:00",
         "changed_date": "2023-04-05T12:44:21.000000+00:00",
         "discovered_date": "2023-04-05T12:07:54.646000+00:00",
-        "domain": "amazon.nexus",
+        "domain": "fakedomain.nexus",
         "escalations": [
           {
             "created": "2023-04-11T05:18:05.262047+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "google_safe",
             "id": "43gB2a3g6m"
           }
@@ -908,8 +909,8 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 > ### Escalated Domains
 >|dt_changed_date|dt_create_date|dt_discovered_date|dt_domain|dt_domain_id|dt_escalations|dt_monitor_ids|dt_mx_exists|dt_proximity_score|dt_registrant_contact_email|dt_registrar|dt_risk_score|dt_risk_status|dt_state|dt_status|dt_threat_profile_evidence|dt_threat_profile_malware|dt_threat_profile_phishing|dt_threat_profile_spam|dt_tld|
 >|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
->| 2023-04-10T07:52:11.000000+00:00 |  | 2023-04-10T07:45:31.478000+00:00 | amazonmetaworld.net.tr | 8Wq8Qj9X7P | {'escalation_type': 'google_safe', 'id': '43gB2Pwg6m', 'created': '2023-04-11T04:46:39.181378+00:00', 'created_by': 'nvojjala@loginsoft.com'} | rA7bn46jQ3 | false | 5 |  |  | 8 | full | watched | active |  | 1 | 6 | 8 | net.tr |
->| 2023-04-05T12:44:21.000000+00:00 |  | 2023-04-05T12:07:54.646000+00:00 | amazon.nexus | ZadmVQOJ0E | {'escalation_type': 'google_safe', 'id': '43gB2a3g6m', 'created': '2023-04-11T05:18:05.262047+00:00', 'created_by': 'nvojjala@loginsoft.com'} | rA7bn46jQ3 | false | 0 |  |  | 0 | full | watched | active |  |  | 53 |  | nexus |
+>| 2023-04-10T07:52:11.000000+00:00 |  | 2023-04-10T07:45:31.478000+00:00 | fakedomainmetaworld.net.tr | 8Wq8Qj9X7P | {'escalation_type': 'google_safe', 'id': '43gB2Pwg6m', 'created': '2023-04-11T04:46:39.181378+00:00', 'created_by': 'user@example.com'} | rA7bn46jQ3 | false | 5 |  |  | 8 | full | watched | active |  | 1 | 6 | 8 | net.tr |
+>| 2023-04-05T12:44:21.000000+00:00 |  | 2023-04-05T12:07:54.646000+00:00 | fakedomain.nexus | ZadmVQOJ0E | {'escalation_type': 'google_safe', 'id': '43gB2a3g6m', 'created': '2023-04-11T05:18:05.262047+00:00', 'created_by': 'user@example.com'} | rA7bn46jQ3 | false | 0 |  |  | 0 | full | watched | active |  |  | 53 |  | nexus |
 
 ### domaintools-iris-detect-get-blocklist-domains
 
@@ -992,7 +993,7 @@ offset parameter for pagination.
         "escalations": [
           {
             "created": "2023-04-10T14:33:11.342255+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "blocked",
             "id": "nzgWDr3b9Y"
           }
@@ -1018,15 +1019,15 @@ offset parameter for pagination.
         "tld": "co"
       },
       {
-        "assigned_by": "nvojjala@loginsoft.com",
+        "assigned_by": "user@example.com",
         "assigned_date": "2023-04-11T05:18:00.000000+00:00",
         "changed_date": "2023-04-05T15:08:54.000000+00:00",
         "discovered_date": "2023-04-05T15:01:50.701000+00:00",
-        "domain": "amazon.mov",
+        "domain": "fakedomain.mov",
         "escalations": [
           {
             "created": "2023-04-11T05:17:59.782456+00:00",
-            "created_by": "nvojjala@loginsoft.com",
+            "created_by": "user@example.com",
             "escalation_type": "blocked",
             "id": "nzgWDAzb9Y"
           }
@@ -1058,8 +1059,8 @@ offset parameter for pagination.
 > ### Blocked Domains
 >|dt_changed_date|dt_create_date|dt_discovered_date|dt_domain|dt_domain_id|dt_escalations|dt_monitor_ids|dt_mx_exists|dt_proximity_score|dt_registrant_contact_email|dt_registrar|dt_risk_score|dt_risk_status|dt_state|dt_status|dt_threat_profile_evidence|dt_threat_profile_malware|dt_threat_profile_phishing|dt_threat_profile_spam|dt_tld|
 >|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
->| 2023-04-10T05:58:01.000000+00:00 |  | 2023-04-10T04:52:28.545000+00:00 | alixpress.co | gaeMyYl1Va | {'escalation_type': 'blocked', 'id': 'nzgWDr3b9Y', 'created': '2023-04-10T14:33:11.342255+00:00', 'created_by': 'nvojjala@loginsoft.com'} | QEMba8wmxo | true | 21 |  |  | 21 | full | watched | active |  | 20 | 15 | 17 | co |
->| 2023-04-05T15:08:54.000000+00:00 |  | 2023-04-05T15:01:50.701000+00:00 | amazon.mov | gaeMVJX8ea | {'escalation_type': 'blocked', 'id': 'nzgWDAzb9Y', 'created': '2023-04-11T05:17:59.782456+00:00', 'created_by': 'nvojjala@loginsoft.com'} | rA7bn46jQ3 | false | 0 |  |  | 0 | full | watched | active |  |  | 53 |  | mov |
+>| 2023-04-10T05:58:01.000000+00:00 |  | 2023-04-10T04:52:28.545000+00:00 | alixpress.co | gaeMyYl1Va | {'escalation_type': 'blocked', 'id': 'nzgWDr3b9Y', 'created': '2023-04-10T14:33:11.342255+00:00', 'created_by': 'user@example.com'} | QEMba8wmxo | true | 21 |  |  | 21 | full | watched | active |  | 20 | 15 | 17 | co |
+>| 2023-04-05T15:08:54.000000+00:00 |  | 2023-04-05T15:01:50.701000+00:00 | fakedomain.mov | gaeMVJX8ea | {'escalation_type': 'blocked', 'id': 'nzgWDAzb9Y', 'created': '2023-04-11T05:17:59.782456+00:00', 'created_by': 'user@example.com'} | rA7bn46jQ3 | false | 0 |  |  | 0 | full | watched | active |  |  | 53 |  | mov |
 
 ### domaintools-iris-detect-reset-fetch-indicators
 
