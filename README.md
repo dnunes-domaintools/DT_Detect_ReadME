@@ -12,24 +12,24 @@ Iris Detect helps organizations discover and monitor lookalike domains with unma
       | --- | --- | --- |
    | DomainTools API Username | DomainTools API Username | True |
    | DomainTools API Key | DomainTools API Key | True |
-   | Enabled on New Domains | If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
-   | Enabled on Changed Domains | If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
-   | Enabled on Blocked Domains | If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
-   | Risk score Ranges | List of risk score ranges to filter domains by | False |
-   | Include Domain Data | Includes DNS and whois data in the response | False |
-   | First fetch timestamp (&lt;number&gt; &lt;time unit&gt;, e.g., 10 minutes, 12 hours, 7 days) | First Fetch timestamp, Default is 3 days. The maximum time range is 30 days. | False |
-   | Maximum number of incidents to fetch | Maximum Number of Incidents fetch limit. Maximum Default limit is 50. | False |
+   | Enabled on New Domains | Monitors the Iris Detect endpoint for newly discovered domains for active monitors in an account. this is the most commonly used option. If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
+   | Enabled on Changed Domains | Monitors the Iris Detect endpoint for recent changes to domains added to the watchlist. This is useful for monitoring changes to infrastructure after a domain has been triaged from the "new" endpoint or within the Iris Detect UI. If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
+   | Enabled on Blocked Domains | Monitors the Iris Detect endpoint for additions to domains added to the blocklist. Additions can be made via this app or the Iris Detect UI. This is useful for teams wishing to route triage domains to firewall software for blocking. If selected, each pull will create a new incident every time the enrichment is run, with the new domains attached as indicators to the incident. Whois and DNS information is preserved in comments. | False |
+   | Risk score Ranges | Optionally specify a risk score range to triage higher risk indicators to different routing. A higher number indicates higher confidence a domain is likely to be used for malicious purposes. | False |
+   | Include Domain Data | Includes DNS and whois data in the response. | False |
+   | First fetch timestamp (&lt;number&gt; &lt;time unit&gt;, e.g., 10 minutes, 12 hours, 7 days) | For the first time the enrichment is run, specify how far back should it pull indicators. First Fetch timestamp, Default is 3 days. The maximum time range is 30 days. | False |
+   | Maximum number of incidents to fetch | Maximum Number of Incidents fetch limit. Maximum Default limit is 50. The maximum supported is 100,000. | False |
    | Trust any certificate (not secure) | Trust any certificate \(not secure\) | False |
    | Use system proxy settings | Use system proxy settings | False |
-   | Fetch indicators |  | False |
+   | Fetch indicators | If selected, domains returned from the Iris Detect API will be created as indicators in XSOAR. | False |
    | Indicator Reputation | Indicators from this integration instance will be marked with this reputation. | False |
-   | Source Reliability | Reliability of the source providing the intelligence data. | True |
-   | Tags | Supports CSV values. | False |
+   | Source Reliability | Sets the source reliability for indicators returned by this integration. | True |
+   | Tags | Sets tags to be applied to indicators returned by this integration. Supports CSV values. | False |
    | Traffic Light Protocol Color | The Traffic Light Protocol \(TLP\) designation to apply to indicators fetched from the feed | False |
    | Bypass exclusion list | When selected, the exclusion list is ignored for indicators from this feed. This means that if an indicator from this feed is on the exclusion list, the indicator might still be added to the system. | False |
    | Incremental Feed | Incremental feeds pull only new or modified indicators that have been sent from the integration. As the determination if the indicator is new or modified happens on the 3rd-party vendor's side, and only indicators that are new or modified are sent to Cortex XSOAR, all indicators coming from these feeds are labeled new or modified. | False |
-   | Incident type |  | False |
-   | Fetch incidents |  | False |
+   | Incident type | Optionally specify an incident type for incidents created by this integration to work with specific playbooks | False |
+   | Fetch incidents | This is required if the option to create incidents on new, changed, or blocked domains above is selected. | False |
 
 4. Click **Test** to validate the URLs, token, and connection.
 
@@ -51,7 +51,7 @@ Reports a domain to Google's Safe Browsing API. After approval, their block list
 
 | **Argument Name**    | **Description**                             | **Required** |
 |----------------------|---------------------------------------------|--------------|
-| watchlist_domain_ids | List of Iris Detect domain IDs to escalate. | Required     | 
+| watchlist_domain_ids | List of Iris Detect domain IDs to escalate. The domain ID can be found in the API response when querying the "new" endpoint. | Required     | 
 
 #### Context Output
 
@@ -83,7 +83,7 @@ There is no context output for this command.
 > ### Escalated Domains
 >|dt_created_by|dt_created_date_result|dt_escalation_type|dt_id|dt_updated_date|dt_watchlist_domain_id|
 >|---|---|---|---|---|---|
->| user@example | 2023-04-11T05:20:49.104498+00:00 | google_safe | 5ebALaKhQW | 2023-04-11T05:20:49.104498+00:00 | jaMzYv2glE |
+>| user@example.com | 2023-04-11T05:20:49.104498+00:00 | google_safe | 5ebALaKhQW | 2023-04-11T05:20:49.104498+00:00 | jaMzYv2glE |
 
 ### domaintools-iris-detect-blocklist-domains
 
@@ -99,7 +99,7 @@ teams or security controls within your organization to block them in email, web,
 
 | **Argument Name**    | **Description**                          | **Required** |
 |----------------------|------------------------------------------|--------------|
-| watchlist_domain_ids | List of Iris Detect domain IDs to block. | Required     | 
+| watchlist_domain_ids | List of Iris Detect domain IDs to block. The domain ID can be found in the API response when querying the "new" or "watched" endpoints.  | Required     | 
 
 #### Context Output
 
@@ -148,7 +148,7 @@ command.
 
 | **Argument Name**    | **Description**                              | **Required** |
 |----------------------|----------------------------------------------|--------------|
-| watchlist_domain_ids | List of Iris Detect domain IDs to watchlist. | Required     | 
+| watchlist_domain_ids | List of Iris Detect domain IDs to watchlist. The domain ID can be found in the API response when querying the "new" endpoint.  | Required     | 
 
 #### Context Output
 
@@ -320,8 +320,7 @@ UI (https://iris.domaintools.com/detect/)
 >|---|---|---|---|---|---|---|---|---|---|
 >| user@example.com | 2022-09-20T06:01:56.760955+00:00 | false | QEMba8wmxo |  | active | completed | domainexpress |  | 2022-09-20T06:02:33.358799+00:00 |
 >| user@example.com | 2022-09-16T22:29:20.567614+00:00 | false | rA7bn46jQ3 |  | active | completed | fakedomain |  | 2022-09-16T22:30:16.212269+00:00 |
->| user@example.com | 2022-09-20T05:35:21.203482+00:00 | false | YNrbr6Gbkx |  | active | completed | searchterm
-> |  | 2022-09-20T05:35:28.630194+00:00 |
+>| user@example.com | 2022-09-20T05:35:21.203482+00:00 | false | YNrbr6Gbkx |  | active | completed | searchterm |  | 2022-09-20T05:35:28.630194+00:00 |
 
 ### domaintools-iris-detect-get-new-domains
 
@@ -340,16 +339,16 @@ to 50 if including DNS and whois details, or 500 otherwise. Use the offset param
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------|--------------|
 | discovered_since    | Filter domains by when they were discovered. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.       | Optional     | 
 | monitor_id          | Monitor ID from monitors response. Only used when requesting domains for a specific monitor.                                      | Optional     | 
-| tlds                | List of TLDs to filter domains by. Possible values are: Filter domains by if they have an MX record in DNS..                      | Optional     | 
+| tlds                | List of TLDs to filter domains by. E.g. top                      | Optional     | 
 | mx_exists           | Filter domains by if they have an MX record in DNS. Possible values are: True, False.                                             | Optional     | 
 | risk_score_ranges   | List of risk score ranges to filter domains by. Valid values are: ["0-0", "1-39", "40-69", "70-99", "100-100"].                   | Optional     | 
 | search              | A "contains" search for any portion of a domain name.                                                                             | Optional     | 
 | sort                | Sort order for domain list. Valid values are an ordered list of the following: ["discovered_date", "changed_date", "risk_score"]. | Optional     | 
 | include_domain_data | Includes DNS and whois data in the response. Possible values are: True, False.                                                    | Optional     | 
-| preview             | Preview mode used for testing. If set to True, only the first 10 results are returned but not limited by hourly restrictions.     | Optional     | 
+| preview             | "Preview" mode is helpful for initial setup and configuration. It limits the results to the first 10 results but removes hourly API restrictions. Possible values are: True, False.     | Optional     | 
 | order               | Sort order "asc" or "desc".                                                                                                       | Optional     | 
 | limit               | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                | Optional     | 
-| offset              | Default 0. Offset for pagination.                                                                                                 | Optional     | 
+| offset              | Default 0. For paginating requests beyond the limit. Subsequent queries with the same parameters are not subject to rate limiting.                                                                                                  | Optional     | 
 
 #### Context Output
 
@@ -464,18 +463,18 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | escalation_types    | escalation_types: List[str]: default None. List of escalation types to filter domains by. Valid values are: ["blocked", "google_safe"].                         | Optional     | 
 | monitor_id          | Monitor ID from monitors response. Only used when requesting domains for a specific monitor.                                                                    | Optional     | 
-| tlds                | List of TLDs to filter domains by.                                                                                                                              | Optional     | 
+| tlds                | List of TLDs to filter domains by. E.g. top                                                                                                                            | Optional     | 
 | mx_exists           | Filter domains by if they have an MX record in DNS. Possible values are: True, False.                                                                           | Optional     | 
 | changed_since       | Filter domains by when they were last changed. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                   | Optional     | 
 | search              | A "contains" search for any portion of a domain name.                                                                                                           | Optional     | 
 | sort                | Sort order for domain list. Valid values are an ordered list of the following: ["discovered_date", "changed_date", "risk_score"].                               | Optional     | 
 | include_domain_data | Includes DNS and whois data in the response. Possible values are: True, False.                                                                                  | Optional     | 
-| preview             | Preview mode used for testing. If set to True, only the first 10 results are returned but not limited by hourly restrictions. Possible values are: True, False. | Optional     | 
+| preview             | "Preview" mode is helpful for initial setup and configuration. It limits the results to the first 10 results but removes hourly API restrictions. Possible values are: True, False. | Optional     | 
 | escalated_since     | Filter domains by when they were last escalated. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                 | Optional     | 
 | order               | Sort order "asc" or "desc".                                                                                                                                     | Optional     | 
 | risk_score_ranges   | List of risk score ranges to filter domains by. Valid values are: ["0-0", "1-39", "40-69", "70-99", "100-100"].                                                 | Optional     | 
 | limit               | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                                              | Optional     | 
-| offset              | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                                              | Optional     | 
+| offset              | Default 0. For paginating requests beyond the limit. Subsequent queries with the same parameters are not subject to rate limiting.                                                               | Optional     | 
 
 #### Context Output
 
@@ -606,7 +605,7 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 Manually retrieve domains that your organization has marked as ignored, matching all of your monitored terms, or a
 specific term specified by a "monitor_id" that can be retrieved using the domaintools-iris-detect-get-monitors-list
 command. This is most useful in cases when a domain might have been mistakenly ignored. The number of domains returned
-is limited to 50 if including DNS and whois details, or 500 otherwise. Use the offset parameter for pagination.
+is limited to 50 if including DNS and whois details, or 100 otherwise. Use the offset parameter for pagination.
 
 #### Base Command
 
@@ -618,17 +617,17 @@ is limited to 50 if including DNS and whois details, or 500 otherwise. Use the o
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | risk_score_ranges   | List of risk score ranges to filter domains by. Valid values are: ["0-0", "1-39", "40-69", "70-99", "100-100"].                                                 | Optional     | 
 | monitor_id          | Monitor ID from monitors response. Only used when requesting domains for a specific monitor.                                                                    | Optional     | 
-| tlds                | List of TLDs to filter domains by.                                                                                                                              | Optional     | 
+| tlds                | List of TLDs to filter domains by. E.g. top                                                                                                                             | Optional     | 
 | mx_exists           | Filter domains by if they have an MX record in DNS. Possible values are: True, False.                                                                           | Optional     | 
 | changed_since       | Filter domains by when they were last changed. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                   | Optional     | 
 | escalated_since     | Filter domains by when they were last escalated. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                 | Optional     | 
 | search              | A "contains" search for any portion of a domain name.                                                                                                           | Optional     | 
 | sort                | Sort order for domain list. Valid values are an ordered list of the following: ["discovered_date", "changed_date", "risk_score"].                               | Optional     | 
 | include_domain_data | Includes DNS and whois data in the response. Possible values are: True, False.                                                                                  | Optional     | 
-| preview             | Preview mode used for testing. If set to True, only the first 10 results are returned but not limited by hourly restrictions. Possible values are: True, False. | Optional     | 
+| preview             | "Preview" mode is helpful for initial setup and configuration. It limits the results to the first 10 results but removes hourly API restrictions. Possible values are: True, False. | Optional     | 
 | order               | Sort order "asc" or "desc".                                                                                                                                     | Optional     | 
 | limit               | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                                              | Optional     | 
-| offset              | Default 0. Offset for pagination.                                                                                                                               | Optional     | 
+| offset              | Default 0. For paginating requests beyond the limit. Subsequent queries with the same parameters are not subject to rate limiting.                                                                                                                              | Optional     | 
 
 #### Context Output
 
@@ -763,10 +762,10 @@ is limited to 50 if including DNS and whois details, or 500 otherwise. Use the o
 ### domaintools-iris-detect-get-escalated-domains
 
 ***
-Manually retrieve domains that your organization has escalated to Google Phishing Protection, matching all of your
+Manually retrieve domains that your organization has escalated to Google Safe Browsing, matching all of your
 monitored terms, or a specific term specified by a "monitor_id" that can be retrieved using the
 domaintools-iris-detect-get-monitors-list command. The number of domains returned is limited to 50 if including DNS and
-whois details, or 500 otherwise. Use the offset parameter for pagination.
+whois details, or 100 otherwise. Use the offset parameter for pagination.
 
 #### Base Command
 
@@ -778,17 +777,17 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | risk_score_ranges   | List of risk score ranges to filter domains by. Valid values are: ["0-0", "1-39", "40-69", "70-99", "100-100"].                                                 | Optional     | 
 | monitor_id          | Monitor ID from monitors response. Only used when requesting domains for a specific monitor.                                                                    | Optional     | 
-| tlds                | List of TLDs to filter domains by.                                                                                                                              | Optional     | 
+| tlds                | List of TLDs to filter domains by. E.g. "top"                                                                                                                             | Optional     | 
 | mx_exists           | Filter domains by if they have an MX record in DNS.                                                                                                             | Optional     | 
 | changed_since       | Filter domains by when they were last changed. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                   | Optional     | 
 | escalated_since     | Filter domains by when they were last escalated. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                 | Optional     | 
 | search              | A "contains" search for any portion of a domain name.                                                                                                           | Optional     | 
 | sort                | Sort order for domain list. Valid values are an ordered list of the following: ["discovered_date", "changed_date", "risk_score"].                               | Optional     | 
 | include_domain_data | Includes DNS and whois data in the response. Possible values are: True, False.                                                                                  | Optional     | 
-| preview             | Preview mode used for testing. If set to True, only the first 10 results are returned but not limited by hourly restrictions. Possible values are: True, False. | Optional     | 
+| preview             | "Preview" mode is helpful for initial setup and configuration. It limits the results to the first 10 results but removes hourly API restrictions. Possible values are: True, False. | Optional     | 
 | order               | Sort order "asc" or "desc".                                                                                                                                     | Optional     | 
 | limit               | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                                              | Optional     | 
-| offset              | Default 0. Offset for pagination.                                                                                                                               | Optional     | 
+| offset              | Default 0. For paginating requests beyond the limit. Subsequent queries with the same parameters are not subject to rate limiting.                                                                                                                               | Optional     | 
 
 #### Context Output
 
@@ -917,7 +916,7 @@ whois details, or 500 otherwise. Use the offset parameter for pagination.
 ***
 Manually retrieve domains that your organization has marked as "blocklisted", matching all of your monitored terms, or a
 specific term specified by a "monitor_id" that can be retrieved using the domaintools-iris-detect-get-monitors-list
-command. The number of domains returned is limited to 50 if including DNS and whois details, or 500 otherwise. Use the
+command. The number of domains returned is limited to 50 if including DNS and whois details, or 100 otherwise. Use the
 offset parameter for pagination.
 
 #### Base Command
@@ -929,18 +928,18 @@ offset parameter for pagination.
 | **Argument Name**   | **Description**                                                                                                                                                 | **Required** |
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | monitor_id          | Monitor ID from monitors response. Only used when requesting domains for a specific monitor.                                                                    | Optional     | 
-| tlds                | List of TLDs to filter domains by.                                                                                                                              | Optional     | 
+| tlds                | List of TLDs to filter domains by. e.g. top                                                                                                                              | Optional     | 
 | mx_exists           | Filter domains by if they have an MX record in DNS. Possible values are: True, False.                                                                           | Optional     | 
 | changed_since       | Filter domains by when they were last changed. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                   | Optional     | 
 | search              | Sort order for domain list. Valid values are an ordered list.                                                                                                   | Optional     | 
 | sort                | Sort order for domain list. Possible values are: discovered_date, changed_date, risk_score.                                                                     | Optional     | 
 | include_domain_data | Includes DNS and whois data in the response. Possible values are: True, False.                                                                                  | Optional     | 
-| preview             | Preview mode used for testing. If set to True, only the first 10 results are returned but not limited by hourly restrictions. Possible values are: True, False. | Optional     | 
+| preview             | "Preview" mode is helpful for initial setup and configuration. It limits the results to the first 10 results but removes hourly API restrictions. Possible values are: True, False. | Optional     | 
 | escalated_since     | Filter domains by when they were last escalated. Provide a datetime in ISO 8601 format, for example 2022-05-18T12:19:51.685496.                                 | Optional     | 
 | order               | Sort order "asc" or "desc".                                                                                                                                     | Optional     | 
 | risk_score_ranges   | List of risk score ranges to filter domains by. Valid values are: ["0-0", "1-39", "40-69", "70-99", "100-100"].                                                 | Optional     | 
 | limit               | Default 100. Limit for pagination. Restricted to maximum 50 if include_domain_data is set to True.                                                              | Optional     | 
-| offset              | Default 0. Offset for pagination.                                                                                                                               | Optional     | 
+| offset              | Default 0. For paginating requests beyond the limit. Subsequent queries with the same parameters are not subject to rate limiting.                                                                                                                              | Optional     | 
 
 #### Context Output
 
