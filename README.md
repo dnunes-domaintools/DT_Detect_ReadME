@@ -18,7 +18,7 @@ Iris Detect helps organizations discover and monitor lookalike domains with unma
    | Risk score Ranges | Optionally specify a risk score range to triage higher risk indicators to different routing. A higher number indicates higher confidence a domain is likely to be used for malicious purposes. | False |
    | Include Domain Data | Includes DNS and whois data in the response. | False |
    | First fetch timestamp (&lt;number&gt; &lt;time unit&gt;, e.g., 10 minutes, 12 hours, 7 days) | For the first time the enrichment is run, specify how far back should it pull indicators. First Fetch timestamp, Default is 3 days. The maximum time range is 30 days. | False |
-   | Maximum number of incidents to fetch | Maximum Number of Incidents fetch limit. Maximum Default limit is 50. The maximum supported is 100,000. | False |
+   | Maximum number of incidents to fetch | This is a required field by XSOAR and should be set to 3, one for each possible feed type: new, changed, blocked. | False |
    | Trust any certificate (not secure) | Trust any certificate \(not secure\) | False |
    | Use system proxy settings | Use system proxy settings | False |
    | Fetch indicators | If selected, domains returned from the Iris Detect API will be created as indicators in XSOAR. | False |
@@ -232,7 +232,7 @@ There is no context output for this command.
 ***
 This command allows users to retrieve the list of monitored terms and respective IDs associated with your organization's
 Iris Detect account. New terms can only be set up and configured directly within the Iris Detect
-UI (https://iris.domaintools.com/detect/)
+UI (https://iris.domaintools.com/detect/). The results are limited to 100 monitors if include_counts is True, or 500 otherwise.
 
 #### Base Command
 
@@ -327,7 +327,7 @@ UI (https://iris.domaintools.com/detect/)
 ***
 Manually retrieve new domains matching all of your monitored terms, or a specific term specified by a "monitor_id" that
 can be retrieved using the domaintools-iris-detect-get-monitors-list command. The number of domains returned is limited
-to 50 if including DNS and whois details, or 500 otherwise. Use the offset parameter for pagination.
+to 50 if including DNS and whois details, or 100 otherwise. Use the offset parameter for pagination.
 
 #### Base Command
 
@@ -451,7 +451,7 @@ to 50 if including DNS and whois details, or 500 otherwise. Use the offset param
 Manually retrieve changes to domains that have been marked as "watched" by users of your organization, matching all of
 your monitored terms, or a specific term specified by a "monitor_id" that can be retrieved using the
 domaintools-iris-detect-get-monitors-list command. The number of domains returned is limited to 50 if including DNS and
-whois details, or 500 otherwise. Use the offset parameter for pagination.
+whois details, or 100 otherwise. Use the offset parameter for pagination.
 
 #### Base Command
 
